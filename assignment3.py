@@ -115,18 +115,7 @@ def vidrach_itky_leda(input_file_path, output_file_path):
             else:
            #     print("failed out of bounds move2 ", r_x + blue)
                 fail2 = 1
-            if r_y - blue >= 0:
-                # Check bottom Y
-                move3 = Array[r_y - blue][r_x]
-            else:
-                #    print("failed out of bounds move1", r_y + blue)
-                fail3 = 1
-            if r_x - blue >= 0:
-                # Check Right X
-                move4 = Array[r_y][r_x - blue]
-            else:
-                #     print("failed out of bounds move2 ", r_x + blue)
-                fail4 = 1
+
             # Check for valid input
            # print("by ", b_y , "move1 ", move1)
            # print("bx ", b_x, "move2 ",move2)
@@ -143,10 +132,7 @@ def vidrach_itky_leda(input_file_path, output_file_path):
                 if bounds2 < 0:
                     # print(" b2 false")
                     bounds2 = 99
-                if bounds3 > n:
-                        fail3 = 1
-                if bounds4 > n:
-                        fail4 = 1
+
                 # Smallest Wins in this situtation
                 if bounds1 < bounds2 or r_x == n:
                     if fail1 == 0:
@@ -157,13 +143,7 @@ def vidrach_itky_leda(input_file_path, output_file_path):
                     #   print("didn't fail")
                     red = move2
                     r_x = r_x + blue
-                if bounds4 < bounds3 or r_x == 0:
-                    if fail3 == 0:
-                        red = move3
-                        r_y = r_y - blue
-                elif fail4 == 0:
-                    red = move4
-                    r_x = r_x - blue
+
                 else:
                     #    print("cannot reasonably move switch to the other")
                     switch = 1
