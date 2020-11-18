@@ -78,6 +78,8 @@ def vidrach_itky_leda(input_file_path, output_file_path):
     # Bound Checker Tokens
     bounds1 = 0
     bounds2 = 0
+    bounds3 = 0
+    bounds4 = 0
     completed = 0
     switch = -1
  #   print("Red = ", red, " Blue = ", blue)
@@ -98,6 +100,8 @@ def vidrach_itky_leda(input_file_path, output_file_path):
             switch = 1
             fail1 = 0
             fail2 = 0
+            fail3 = 0
+            fail4 = 0
            # print("blue is bigger = ", blue)
             if r_y + blue <= n:
                 # Check bottom Y
@@ -111,20 +115,38 @@ def vidrach_itky_leda(input_file_path, output_file_path):
             else:
            #     print("failed out of bounds move2 ", r_x + blue)
                 fail2 = 1
+            if r_y - blue >= 0:
+                # Check bottom Y
+                move3 = Array[r_y - blue][r_x]
+            else:
+                #    print("failed out of bounds move1", r_y + blue)
+                fail3 = 1
+            if r_x - blue >= 0:
+                # Check Right X
+                move4 = Array[r_y][r_x - blue]
+            else:
+                #     print("failed out of bounds move2 ", r_x + blue)
+                fail4 = 1
             # Check for valid input
            # print("by ", b_y , "move1 ", move1)
            # print("bx ", b_x, "move2 ",move2)
             if compb == 0:
                 bounds1 = b_y - move1
                 bounds2 = b_x - move2
+                bounds3 = b_y + move3
+                bounds4 = b_x + move4
                 print("by ", bounds1)
                 print("bx ", bounds2)
                 if bounds1 < 0:
-                    print(" b1 false")
+
                     bounds1 = 99
                 if bounds2 < 0:
                     # print(" b2 false")
                     bounds2 = 99
+                if bounds3 > n:
+                        fail3 = 1
+                if bounds4 > n:
+                        fail4 = 1
                 # Smallest Wins in this situtation
                 if bounds1 < bounds2 or r_x == n:
                     if fail1 == 0:
@@ -135,6 +157,13 @@ def vidrach_itky_leda(input_file_path, output_file_path):
                     #   print("didn't fail")
                     red = move2
                     r_x = r_x + blue
+                if bounds4 < bounds3 or r_x == 0:
+                    if fail3 == 0:
+                        red = move3
+                        r_y = r_y - blue
+                elif fail4 == 0:
+                    red = move4
+                    r_x = r_x - blue
                 else:
                     #    print("cannot reasonably move switch to the other")
                     switch = 1
@@ -149,6 +178,8 @@ def vidrach_itky_leda(input_file_path, output_file_path):
             switch = 0
             fail1 = 0
             fail2 = 0
+            fail3 = 0
+            fail4 = 0
            # print("red is bigger")
             if b_y - red >= 0:
                 # Check bottom Y
@@ -164,7 +195,7 @@ def vidrach_itky_leda(input_file_path, output_file_path):
             else:
                # print("failed out of bounds move")
                 fail2 = 1
-
+ 
             # Check for valid input, only if r isn't completed
             if compr == 0:
                 bounds1 = r_y + move1
